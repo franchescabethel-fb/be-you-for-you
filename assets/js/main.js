@@ -97,6 +97,57 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  /* ---------- Carousel (swipeable event gallery) ----------
+     Native horizontal scroll + scroll-snap handles the actual swipe/drag;
+     this just wires up the arrow buttons and dot indicators to match. */
+  document.querySelectorAll('.carousel').forEach(function (carousel) {
+    var track = carousel.querySelector('.carousel-track');
+    if (!track) return;
+    var slides = Array.prototype.slice.call(track.children);
+    var dotsWrap = carousel.querySelector('.carousel-dots');
+    var prevBtn = carousel.querySelector('.carousel-arrow.prev');
+    var nextBtn = carousel.querySelector('.carousel-arrow.next');
+
+    if (dotsWrap) {
+      slides.forEach(function (slide, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.setAttribute('aria-label', 'Go to photo ' + (i + 1));
+        if (i === 0) dot.classList.add('active');
+        dot.addEventListener('click', function () {
+          slide.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        });
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function updateDots() {
+      if (!dotsWrap) return;
+      var trackLeft = track.scrollLeft;
+      var closest = 0, closestDist = Infinity;
+      slides.forEach(function (s, i) {
+        var dist = Math.abs(s.offsetLeft - trackLeft);
+        if (dist < closestDist) { closestDist = dist; closest = i; }
+      });
+      Array.prototype.forEach.call(dotsWrap.children, function (d, i) {
+        d.classList.toggle('active', i === closest);
+      });
+    }
+    track.addEventListener('scroll', function () {
+      window.requestAnimationFrame(updateDots);
+    }, { passive: true });
+
+    function stepWidth() {
+      return slides[0] ? slides[0].getBoundingClientRect().width + 20 : 300;
+    }
+    if (prevBtn) prevBtn.addEventListener('click', function () {
+      track.scrollBy({ left: -stepWidth(), behavior: 'smooth' });
+    });
+    if (nextBtn) nextBtn.addEventListener('click', function () {
+      track.scrollBy({ left: stepWidth(), behavior: 'smooth' });
+    });
+  });
+
   /* ---------- Current-page nav highlight ---------- */
   var path = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-links a').forEach(function (a) {
