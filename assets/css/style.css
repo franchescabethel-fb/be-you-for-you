@@ -241,16 +241,14 @@ section { padding: 110px 0; position: relative; }
 .hero-content h1 {
   font-size: clamp(46px, 7.4vw, 92px);
   margin-bottom: 20px;
-  /* Hero titles default to --plum-deep (see global h1 rule) which is low-contrast
-     against the dark hero overlay. Rather than force every title to solid white,
-     add a white outline so the brand purple stays visible but legible. */
-  -webkit-text-stroke: 1px var(--white);
-  text-stroke: 1px var(--white);
-  text-shadow:
-    -1px -1px 0 var(--white),
-     1px -1px 0 var(--white),
-    -1px  1px 0 var(--white),
-     1px  1px 0 var(--white);
+  /* The plain (non-script) words default to --plum-deep, which reads flat against
+     the dark hero photo. Make those words hollow — transparent fill, white outline
+     only — while the .script accent word keeps its normal solid rose fill below. */
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--white);
+}
+.hero-content h1 .script {
+  -webkit-text-stroke: 0px transparent;
 }
 .hero-content p.lead {
   font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.82);
