@@ -245,7 +245,7 @@ section { padding: 110px 0; position: relative; }
      the dark hero photo. Make those words hollow — transparent fill, white outline
      only — while the .script accent word keeps its normal solid rose fill below. */
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--white);
+  -webkit-text-stroke: 3px var(--white);
 }
 .hero-content h1 .script {
   -webkit-text-stroke: 0px transparent;
