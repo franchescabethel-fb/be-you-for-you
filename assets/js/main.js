@@ -84,13 +84,13 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         } else {
           if (successBox) {
-            successBox.textContent = 'Something went wrong — please try again or email beyouforyou@shopmonets.com directly.';
+            successBox.textContent = 'Something went wrong — please try again or email info@beyouforyou.org directly.';
             successBox.classList.add('show');
           }
         }
       }).catch(function () {
         if (successBox) {
-          successBox.textContent = 'Something went wrong — please try again or email beyouforyou@shopmonets.com directly.';
+          successBox.textContent = 'Something went wrong — please try again or email info@beyouforyou.org directly.';
           successBox.classList.add('show');
         }
       });
